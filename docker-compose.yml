@@ -1,0 +1,16 @@
+version: '3'
+services:
+  node-app:
+    build: ./NodeServer
+    ports:
+      - "3001:3001"
+  
+  flask-app:
+    build: ./FlaskServer
+    ports:
+      - "5001:5000"
+
+  react-app:
+    build: ./ReactApp
+    ports:
+      - "3000:3000"

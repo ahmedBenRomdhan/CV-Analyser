@@ -3,14 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 const {run} = require("./db/mongodb-connection-file");
 
 var app = express();
-run().catch(console.dir);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,7 +29,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-
+run().catch(console.dir);
 
 // error handler
 app.use(function(err, req, res, next) {
