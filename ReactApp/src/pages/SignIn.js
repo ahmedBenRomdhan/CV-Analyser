@@ -10,7 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import {
   Layout,
   Menu,
@@ -29,6 +29,9 @@ import {
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
+import axios from 'axios';
+
+
 function onChange(checked) {
   console.log(`switch to ${checked}`);
 }
@@ -114,10 +117,24 @@ const signin = [
     />
   </svg>,
 ];
-export default class SignIn extends Component {
+class SignIn extends Component {
   render() {
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
       console.log("Success:", values);
+      try {
+        const response = await axios.post("http://localhost:3001/auth/login", values)
+        console.log(response)
+        
+        if (response.data.token) {
+          // Save the token in localStorage or state management
+          localStorage.setItem("authToken", response.data.token);
+          
+          // Redirect to the dashboard
+          this.props.history.push("/dashboard");
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -289,3 +306,5 @@ export default class SignIn extends Component {
     );
   }
 }
+
+export default withRouter(SignIn);

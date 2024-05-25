@@ -31,6 +31,7 @@ import {
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
+import axios from 'axios';
 
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
@@ -116,10 +117,18 @@ const signin = [
 ];
 export default class SignUp extends Component {
   render() {
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
       console.log("Success:", values);
+    
+    try {
+      const response = await axios.post("http://localhost:3001/auth/register",values);
+      console.log(response.data);
+      alert('Registration successful');
+    } catch (error) {
+      console.error(error.message);
+      alert('Registration failed');
+    }
     };
-
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
     };
@@ -158,9 +167,7 @@ export default class SignUp extends Component {
                 </Menu.Item>
               </Menu>
             </div>
-            <div className="header-col header-btn">
-              <Button type="false">FREE DOWNLOAD</Button>
-            </div>
+            
           </Header>
 
           <Content className="p-0">
@@ -199,12 +206,12 @@ export default class SignUp extends Component {
                 className="row-col"
               >
                 <Form.Item
-                  name="Name"
+                  name="username"
                   rules={[
                     { required: true, message: "Please input your username!" },
                   ]}
                 >
-                  <Input placeholder="Name" />
+                  <Input placeholder="username" />
                 </Form.Item>
                 <Form.Item
                   name="email"
@@ -220,7 +227,7 @@ export default class SignUp extends Component {
                     { required: true, message: "Please input your password!" },
                   ]}
                 >
-                  <Input placeholder="Passwoed" />
+                  <Input placeholder="password" />
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked">

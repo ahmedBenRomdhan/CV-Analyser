@@ -29,7 +29,6 @@ const login = async (req, res, next) => {
       if (!passwordMatch) {
         return res.status(401).json({ message: 'Incorrect password' });
       }
-      console.log(process.env.SECRET_KEY)
   
       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
         expiresIn: '1 hour'
