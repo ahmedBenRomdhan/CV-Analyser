@@ -6,4 +6,6 @@ const {uploadFile} = require('../middlewares/upload')
 
 router.post('/add', authenticate, uploadFile, cvController.addCV);
 
+router.get('/get', authenticate, cvController.getCVs)
+
 module.exports = router;

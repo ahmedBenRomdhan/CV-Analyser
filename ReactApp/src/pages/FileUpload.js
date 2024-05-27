@@ -10,7 +10,35 @@ export default class FileUploadComponent extends Component {
       data: [],
     };
   }
-  
+  componentDidMount() {
+    this.fetchCVs();
+  }
+
+  fetchCVs = async () => {
+    try {
+      const token = localStorage.getItem('authToken'); // Get the token from local storage
+      const response = await axios.get('http://localhost:3001/cv/get', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token to the headers
+        },
+      });
+      const cvs = response.data;
+      console.log(cvs)
+
+      const formattedData = cvs.map((cv, index) => ({
+        key: index + 1,
+        name: cv.filePath.split('/').pop(), // Assuming the file name is the last part of the filePath
+        cv: <a href={`http://localhost:3001/${cv.filePath}`} target="_blank" rel="noopener noreferrer">{cv.filePath.split('/').pop()}</a>,
+        extractedData: cv.extractedText || 'No extracted data',
+        processedData: cv.processedData || 'No processed data',
+        tags: ['existing'], // You can update this based on your requirements
+      }));
+
+      this.setState({ data: formattedData });
+    } catch (error) {
+      message.error('Error fetching CVs');
+    }
+  };
   handleUploadChange = info => {
     if (info.file.status !== "uploading") {
       console.log(info.file, info.fileList);
@@ -18,7 +46,7 @@ export default class FileUploadComponent extends Component {
     if (info.file.status === "done") {
       message.success(`${info.file.name} file uploaded successfully`);
       
-      const uploadedFilePath = info.file.response.fileData.filePath; // Assuming the response contains the file path
+      const uploadedFilePath = info.file.response.filePath; // Assuming the response contains the file path
       
       this.setState(prevState => ({
         data: [
@@ -39,11 +67,13 @@ export default class FileUploadComponent extends Component {
   };
 
   render() {
+    const token = localStorage.getItem("authToken")
+
     const formProps = {
       name: "file",
-      action: "http://localhost:3001/upload/uploadfile",
+      action: `http://localhost:3001/cv/add`,
       headers: {
-        authorization: "authorization-text",
+        authorization: `Bearer ${token}`,
       },
       onChange: this.handleUploadChange,
     };
