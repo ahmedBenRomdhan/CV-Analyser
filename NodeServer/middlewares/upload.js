@@ -4,7 +4,7 @@ const multer = require("multer");
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __basedir + "/NodeServer/uploads/");
+    cb(null, __basedir + "/NodeServer/uploads/Cvs");
   },
   filename: (req, file, cb) => {
     console.log(file.originalname);
@@ -14,28 +14,28 @@ let storage = multer.diskStorage({
 
 let uploadFile = multer({
   storage: storage
-}).single("image");
+}).single("file");
+
+let jobStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __basedir + "/NodeServer/uploads/Job descriptions");
+  },
+  filename: (req, file, cb) => {
+    console.log(file.originalname);
+    cb(null, file.originalname);
+  },
+});
+
+let uploadJob = multer({
+  storage: jobStorage
+}).single("file");
 
 let uploadFileMiddleware = util.promisify(uploadFile);
-module.exports = uploadFileMiddleware;
-
-
-// const multer = require('multer');
-
-// // Set up storage for uploaded files
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'uploads/');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + '-' + file.originalname);
-//   }
-// });
-
-// // Create the multer instance
-// const upload = multer({ storage: storage }).single("file");;
-
-// module.exports = upload;
+module.exports = {
+  uploadFileMiddleware,
+  uploadFile,
+  uploadJob
+};
 
 
 

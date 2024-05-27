@@ -10,6 +10,7 @@ const upload = async (req, res) => {
 
     res.status(200).send({
       message: "Uploaded the file successfully: " + req.file.originalname,
+      fileData:{filePath: req.file.path}
     });
   } catch (err) {
     console.log(err);

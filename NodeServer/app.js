@@ -5,8 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var authRouter = require('./routes/auth')
-var uploadRouter = require('./routes/upload')
+var authRouter = require('./routes/auth');
+var uploadRouter = require('./routes/upload');
+var cvRouter = require('./routes/Cv');
+var jobDescriptionRouter = require('./routes/jobDescription');
 const cors = require("cors")
 const {run} = require("./db/mongodb-connection-file");
 
@@ -26,11 +28,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use("/upload",  express.static(path.join(__dirname, 'uploads')))
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/upload', uploadRouter);
-
+app.use('/cv', cvRouter)
+app.use('/jobDescription', jobDescriptionRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

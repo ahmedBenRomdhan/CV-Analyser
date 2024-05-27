@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const cvSchema = new mongoose.Schema(
     {
         userId:{
-            type:Integer,
+            type:mongoose.Schema.Types.ObjectId,
             required: true,
-            unique:true
+            ref: 'User'
         },
         filePath: {
             type: String,
