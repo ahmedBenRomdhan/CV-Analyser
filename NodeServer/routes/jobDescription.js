@@ -6,4 +6,6 @@ const {uploadJob} = require('../middlewares/upload')
 
 router.post('/add', authenticate, uploadJob, jobDescriptionController.addJobDescription);
 
+router.get('/get', authenticate, jobDescriptionController.getJobDescriptions)
+
 module.exports = router;

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Table, Tag, Space, message, Button, Upload } from 'antd';
 import { ToTopOutlined } from "@ant-design/icons";
-export default class FileUploadComponent extends Component {
+
+export default class CvUploadComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -29,6 +30,7 @@ export default class FileUploadComponent extends Component {
         key: index + 1,
         name: cv.filePath.split('/').pop(), // Assuming the file name is the last part of the filePath
         cv: <a href={`http://localhost:3001/${cv.filePath}`} target="_blank" rel="noopener noreferrer">{cv.filePath.split('/').pop()}</a>,
+        
         extractedData: cv.extractedText || 'No extracted data',
         processedData: cv.processedData || 'No processed data',
         tags: ['existing'], // You can update this based on your requirements
@@ -47,14 +49,16 @@ export default class FileUploadComponent extends Component {
       message.success(`${info.file.name} file uploaded successfully`);
       
       const uploadedFilePath = info.file.response.filePath; // Assuming the response contains the file path
+ 
+      console.log(uploadedFilePath)
       
       this.setState(prevState => ({
         data: [
           ...prevState.data,
           {
             key: prevState.data.length + 1,
-            name: info.file.name,
-            cv: <a href={`http://localhost:3001${uploadedFilePath}`} target="_blank" rel="noopener noreferrer">{info.file.name}</a>,
+            // name: info.file.name,
+            cv: <a href={`http://localhost:3001/${uploadedFilePath}`} target="_blank" rel="noopener noreferrer">{info.file.name}</a>,
             extractedData: 'Extracted data placeholder',
             processedData: 'Processed data placeholder',
             tags: ['new'],
@@ -78,12 +82,12 @@ export default class FileUploadComponent extends Component {
       onChange: this.handleUploadChange,
     };
     const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <a>{text}</a>,
-      },
+      // {
+      //   title: 'Name',
+      //   dataIndex: 'name',
+      //   key: 'name',
+      //   render: text => <a>{text}</a>,
+      // },
       {
         title: 'CV',
         dataIndex: 'cv',
@@ -133,9 +137,11 @@ export default class FileUploadComponent extends Component {
 
     return (
       <div className="container">
-        <h3>React File Upload</h3>
-        <hr/>
+        
         <div style={{ marginTop: '40px' }}>
+          <Table columns={columns} dataSource={this.state.data} />
+        </div>
+        <div style={{ marginTop: '0px' }}>
           <div className="uploadfile pb-15 shadow-none">
             <Upload {...formProps}>
               <Button
@@ -148,10 +154,10 @@ export default class FileUploadComponent extends Component {
             </Upload>
           </div>
         </div>
-        <div style={{ marginTop: '40px' }}>
-          <Table columns={columns} dataSource={this.state.data} />
-        </div>
+
+        
       </div>
+      
     );
   }
 }

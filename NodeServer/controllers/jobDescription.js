@@ -23,4 +23,15 @@ const addJobDescription = async (req, res) => {
 };
 
 
-module.exports= {addJobDescription}
+const getJobDescriptions = async (req, res) => {
+    try {
+      const jobs = await JobDescription.find();
+      res.status(200).json(jobs);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+
+
+module.exports= {addJobDescription, getJobDescriptions}

@@ -17,11 +17,13 @@ import Rtl from "./pages/Rtl";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import FileUpload from "./pages/FileUpload"
 import Main from "./components/layout/Main";
+import CvUpload from "./pages/CvUpload";
+import JobDescription from "./pages/JobDescriptionUpload";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
+
 
 
 function App() {
@@ -36,7 +38,8 @@ function App() {
           <Route exact path="/billing" component={Billing} />
           <Route exact path="/rtl" component={Rtl} />
           <Route exact path="/profile" component={Profile} />
-          <Route exact path="/upload" component={FileUpload} />
+          <Route exact path="/uploadCV" component={CvUpload} />
+          <Route exact path="/uploadJobDescription" component={JobDescription} />
         </Main>
         <Redirect from="*" to="/sign-in" />
 

@@ -182,7 +182,20 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="9">
-          <NavLink to="/upload">
+          <NavLink to="/uploadCV">
+            <span
+              className="icon"
+              style={{
+                background: page === "uploadCV" ? color : "",
+              }}
+            >
+              {dashboard}
+            </span>
+            <span className="label">Upload CV</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="9">
+          <NavLink to="/uploadJobDescription">
             <span
               className="icon"
               style={{
@@ -191,7 +204,7 @@ function Sidenav({ color }) {
             >
               {dashboard}
             </span>
-            <span className="label">Upload</span>
+            <span className="label">Upload Job Description</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">

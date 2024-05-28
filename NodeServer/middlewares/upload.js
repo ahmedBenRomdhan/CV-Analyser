@@ -4,7 +4,7 @@ const multer = require("multer");
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __basedir + "/NodeServer/uploads/Cvs");
+    cb(null, __basedir + "/uploads/Cvs");
   },
   filename: (req, file, cb) => {
     console.log(file.originalname);
@@ -18,7 +18,7 @@ let uploadFile = multer({
 
 let jobStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __basedir + "/NodeServer/uploads/Job descriptions");
+    cb(null, __basedir + "/uploads/Job descriptions");
   },
   filename: (req, file, cb) => {
     console.log(file.originalname);

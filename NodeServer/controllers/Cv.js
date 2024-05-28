@@ -6,11 +6,11 @@ const addCV = async (req, res) => {
     const { extractedText, processedData } = req.body;
     console.log(req.user.id);
     const file = req.file;
-
+    
     console.log(file);
 
     const filePath = path.join("uploads/Cvs", file.filename);
-
+    console.log(filePath)
     const newCV = new CV({
       userId: req.user.id,
       filePath,
@@ -21,6 +21,7 @@ const addCV = async (req, res) => {
     const savedCV = await newCV.save();
     res.status(201).json(savedCV);
   } catch (error) {
+    console.log(error.message)
     res.status(500).json({ message: error.message });
   }
 };
