@@ -2,11 +2,15 @@ version: '3'
 services:
   node-app:
     build: ./NodeServer
+    volumes:
+      - ./uploads:/usr/src/uploads
     ports:
       - "3001:3001"
   
   flask-app:
     build: ./FlaskServer
+    volumes:
+      - ./uploads:/usr/src/uploads
     ports:
       - "5001:5000"
 

@@ -17,7 +17,6 @@ require('dotenv').config();
 run().catch(console.dir);
 app.use(cors());
 global.__basedir = path.join(__dirname, ".."); 
-console.log(global.__basedir)
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
