@@ -8,13 +8,16 @@ WORKDIR /app
 COPY . /app
 
 # Install Flask and any other dependencies
-RUN pip install --no-cache-dir Flask
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Define environment variable
-ENV NAME World
+# Copy the start script to the container
+COPY start.sh /app/start.sh
 
-# Run app.py when the container launches
-CMD ["python", "run.py"]
+# Ensure the start script has execution permissions
+RUN chmod +x /app/start.sh
+
+# Run the start script when the container launches
+CMD ["/bin/sh", "/app/start.sh"]

@@ -1,12 +1,7 @@
-from flask import render_template, request, jsonify
-from app import app
+from flask import Blueprint
 
-@app.route('/')
-def home():
-    return "Hello, Flask!"
+main = Blueprint('main', __name__)
 
-@app.route('/process', methods=['POST'])
-def process():
-    data = request.get_json()
-    # Process data here
-    return jsonify({"status": "success", "data": data})
+@main.route('/')
+def index():
+    return "Hello, World!"
