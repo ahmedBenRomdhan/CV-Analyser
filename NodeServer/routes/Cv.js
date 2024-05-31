@@ -8,4 +8,6 @@ router.post('/add', authenticate, uploadFile, cvController.addCV);
 
 router.get('/get', authenticate, cvController.getCVs)
 
+router.post('/process', authenticate, cvController.processCV);
+
 module.exports = router;

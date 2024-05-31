@@ -69,6 +69,25 @@ export default class CvUploadComponent extends Component {
       message.error(`${info.file.name} file upload failed.`);
     }
   };
+  handleProcessCV = async (cv) => {
+    try {
+      await axios.post('http://localhost:3001/cv/process', {
+        filePath: cv.filePath,
+        id: cv._id
+      });
+      // const processedData = response.data.processedData;
+
+      // this.setState(prevState => ({
+      //   data: prevState.data.map(item => 
+      //     item._id === cv._id ? { ...item, processedData } : item
+      //   )
+      // }));
+
+      message.success('CV processed successfully');
+    } catch (error) {
+      message.error('Error processing CV');
+    }
+  };
 
   render() {
     const token = localStorage.getItem("authToken")
@@ -128,8 +147,7 @@ export default class CvUploadComponent extends Component {
         key: 'action',
         render: (text, record) => (
           <Space size="middle">
-            <a>Invite {record.name}</a>
-            <a>Delete</a>
+            <Button onClick={() => this.handleProcessCV(record)}>Process</Button>
           </Space>
         ),
       },

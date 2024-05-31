@@ -9,6 +9,9 @@ var authRouter = require('./routes/auth');
 var uploadRouter = require('./routes/upload');
 var cvRouter = require('./routes/Cv');
 var jobDescriptionRouter = require('./routes/jobDescription');
+const { connectRabbitMQ, sendMessage } = require('./rabbitmq/rabbitmq');
+
+
 const cors = require("cors")
 const {run} = require("./db/mongodb-connection-file");
 
@@ -35,6 +38,21 @@ app.use('/auth', authRouter);
 app.use('/upload', uploadRouter);
 app.use('/cv', cvRouter)
 app.use('/jobDescription', jobDescriptionRouter)
+
+const rabbitMQUrl = 'amqp://guest:guest@rabbitmq:5672';
+
+connectRabbitMQ(rabbitMQUrl)
+  .then(() => {
+    console.log('Connected to RabbitMQ');
+  })
+  .catch(err => {
+    console.error('Failed to connect to RabbitMQ', err.message);
+  });
+  
+  // Call the function to start the delay
+  executeAfterDelay();
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

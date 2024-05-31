@@ -1,5 +1,6 @@
 const CV = require("../models/CV");
 const path = require("path");
+const { sendMessage } = require('../rabbitmq/rabbitmq');
 
 const addCV = async (req, res) => {
   try {
@@ -35,4 +36,14 @@ const getCVs = async (req, res) => {
   }
 };
 
-module.exports = { addCV, getCVs };
+const processCV = (req, res) => {
+  try {
+    const cvMetadata = req.body;
+    sendMessage(queueName, JSON.stringify(cvMetadata));
+    res.send({ message: 'CV processing initiated' });
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+}
+
+module.exports = { addCV, getCVs, processCV };
