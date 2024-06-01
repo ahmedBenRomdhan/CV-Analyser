@@ -36,4 +36,6 @@ const consumeMessage = (queue, callback) => {
   channel.consume(queue, callback, { noAck: true });
 };
 
-module.exports = { connectRabbitMQ, sendMessage, consumeMessage };
+const getChannel = () => channel;
+
+module.exports = { connectRabbitMQ, sendMessage, consumeMessage, getChannel };

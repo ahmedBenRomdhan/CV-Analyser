@@ -20,4 +20,8 @@ COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
 # Run the start script when the container launches
+# CMD ["/bin/sh", "/app/start.sh"]
 CMD ["/bin/sh", "/app/start.sh"]
+
+
+

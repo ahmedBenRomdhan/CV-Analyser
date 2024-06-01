@@ -30,12 +30,13 @@ export default class CvUploadComponent extends Component {
         key: index + 1,
         name: cv.filePath.split('/').pop(), // Assuming the file name is the last part of the filePath
         cv: <a href={`http://localhost:3001/${cv.filePath}`} target="_blank" rel="noopener noreferrer">{cv.filePath.split('/').pop()}</a>,
-        
+        id: cv._id,
+        filePath: cv.filePath,
         extractedData: cv.extractedText || 'No extracted data',
         processedData: cv.processedData || 'No processed data',
         tags: ['existing'], // You can update this based on your requirements
       }));
-
+      console.log(formattedData)
       this.setState({ data: formattedData });
     } catch (error) {
       message.error('Error fetching CVs');
@@ -70,11 +71,19 @@ export default class CvUploadComponent extends Component {
     }
   };
   handleProcessCV = async (cv) => {
+    const token = localStorage.getItem("authToken")
+
     try {
+      console.log(cv)
       await axios.post('http://localhost:3001/cv/process', {
         filePath: cv.filePath,
-        id: cv._id
-      });
+        id: cv.id
+      },
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    });
       // const processedData = response.data.processedData;
 
       // this.setState(prevState => ({
@@ -85,7 +94,7 @@ export default class CvUploadComponent extends Component {
 
       message.success('CV processed successfully');
     } catch (error) {
-      message.error('Error processing CV');
+      message.error('Error processing CV', error.message);
     }
   };
 

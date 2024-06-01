@@ -74,6 +74,7 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+    
 
   react-app:
     build: ./ReactApp
