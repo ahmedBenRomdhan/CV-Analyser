@@ -1,3 +1,13 @@
 Flask==2.0.3
 pika==1.2.0
 Werkzeug==2.0.3
+PyPDF2
+openai
+pypdf
+pdfminer.six
+flask-cors
+spacy
+regex
+nltk
+pyyaml
+pandas

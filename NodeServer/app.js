@@ -10,8 +10,7 @@ var uploadRouter = require('./routes/upload');
 var cvRouter = require('./routes/Cv');
 var jobDescriptionRouter = require('./routes/jobDescription');
 const { connectRabbitMQ, sendMessage } = require('./rabbitmq/rabbitmq');
-const queue = 'cv_processing_queue';
-const message = JSON.stringify({ filePath: 'path/to/file', id: '12345' });
+
 
 const cors = require("cors")
 const {run} = require("./db/mongodb-connection-file");
@@ -44,8 +43,8 @@ const rabbitMQUrl = 'amqp://guest:guest@rabbitmq:5672';
 
 connectRabbitMQ(rabbitMQUrl)
   .then(() => {
-    sendMessage(queue, message);
-    console.log(`Connected to RabbitMQ ${queue}`);
+    
+    console.log(`Connected to RabbitMQ`);
   })
   .catch(err => {
     console.error('Failed to connect to RabbitMQ', err.message);

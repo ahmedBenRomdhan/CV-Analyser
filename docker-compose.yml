@@ -1,43 +1,4 @@
-# version: '3'
-# services:
-#   rabbitmq:
-#     image: rabbitmq:3-management
-#     ports:
-#       - "5672:5672"  # RabbitMQ port for application communication
-#       - "15672:15672"  # Management UI port
-#     environment:
-#       - RABBITMQ_DEFAULT_USER=guest
-#       - RABBITMQ_DEFAULT_PASS=guest
-#     healthcheck:
-#       test: ["CMD", "rabbitmqctl", "status"]
-#       interval: 60s
-#       timeout: 30s
-#       retries: 5
-   
 
-#   node-app:
-#     build: ./NodeServer
-#     volumes:
-#       - ./uploads:/usr/src/uploads
-#     ports:
-#       - "3001:3001"
-#     depends_on:
-#       - rabbitmq
-      
-  
-#   flask-app:
-#     build: ./FlaskServer
-#     volumes:
-#       - ./uploads:/usr/src/uploads
-#     ports:
-#       - "5001:5000"
-#     depends_on:
-#       - rabbitmq
-
-#   react-app:
-#     build: ./ReactApp
-#     ports:
-#       - "3000:3000"
 
 version: '3'
 services:
@@ -51,7 +12,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
-      interval: 30s
+      interval: 20s
       timeout: 10s
       retries: 5
 

@@ -71,27 +71,21 @@ export default class CvUploadComponent extends Component {
     }
   };
   handleProcessCV = async (cv) => {
-    const token = localStorage.getItem("authToken")
+    // const token = localStorage.getItem("authToken")
 
     try {
       console.log(cv)
-      await axios.post('http://localhost:3001/cv/process', {
+      const response = await axios.post('http://localhost:5001/process_cv', {
         filePath: cv.filePath,
         id: cv.id
-      },
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
-      }
-    });
-      // const processedData = response.data.processedData;
-
-      // this.setState(prevState => ({
-      //   data: prevState.data.map(item => 
-      //     item._id === cv._id ? { ...item, processedData } : item
-      //   )
-      // }));
-
+      },)
+    // {
+    //   headers: {
+    //     authorization: `Bearer ${token}`,
+    //   }
+    // });
+      const responseData = response.data;
+      console.log(responseData);
       message.success('CV processed successfully');
     } catch (error) {
       message.error('Error processing CV', error.message);

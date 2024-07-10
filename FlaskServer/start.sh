@@ -8,7 +8,7 @@ python run.py &
 echo "Starting RabbitMQ consumer..."
 python rabbitmq_consumer.py &
 
-# echo "Starting data extraction script"
-# python extract_data.py &
+echo "Starting data extraction script"
+python extract_data.py &
 
 wait 

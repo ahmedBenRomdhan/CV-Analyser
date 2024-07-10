@@ -30,14 +30,21 @@ import logging
 import sys
 import json
 
+# Set up logging
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, force=True)
+logging.getLogger('pika').setLevel(logging.WARNING)
+
 message_list = []
+
 def callback(ch, method, properties, body):
     message = json.loads(body)
     # Append the message to the global list
     message_list.append(message)
     logging.info(f"consumer {message_list}")
     logging.info(f"Received {body}")
+    # Save message_list to a file
+    with open('message_list.json', 'w') as f:
+        json.dump(message_list, f)
 
 def main():
     logging.debug("Starting main function")
